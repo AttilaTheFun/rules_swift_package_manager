@@ -1,0 +1,33 @@
+load(
+    "@build_bazel_rules_swift//swift:swift.bzl",
+    "swift_binary",
+    "swift_test",
+)
+
+swift_binary(
+    name = "echo_server",
+    srcs = ["server_main.swift"],
+    deps = [
+        "//examples/grpc_example:echo_proto_swift",
+        "//examples/grpc_example:echo_server_services_swift",
+    ],
+)
+
+swift_test(
+    name = "echo_client_unit_test",
+    srcs = [
+        "client_unit_test.swift",
+        "main.swift",
+    ],
+    deps = [
+        "//examples/grpc_example:echo_client_services_swift",
+        "//examples/grpc_example:echo_proto_swift",
+        "//examples/grpc_example:echo_server_services_swift",
+    ],
+)
+
+swift_binary(
+    name = "echo_client",
+    srcs = ["client_main.swift"],
+    deps = ["//examples/grpc_example:echo_client_services_swift"],
+)

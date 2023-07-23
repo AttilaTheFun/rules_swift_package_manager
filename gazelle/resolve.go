@@ -21,6 +21,7 @@ func (*swiftLang) Imports(_ *config.Config, r *rule.Rule, f *rule.File) []resolv
 		return nil
 	}
 	moduleName := swift.ModuleName(r)
+	log.Println("Imported swift module name: ", moduleName)
 	if moduleName == "" {
 		// Returning an empty list will cause the rule to be indexed
 		return []resolve.ImportSpec{}

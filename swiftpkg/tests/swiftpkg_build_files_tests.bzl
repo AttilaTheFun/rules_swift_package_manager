@@ -239,13 +239,20 @@ def _pkg_info(
                 clang_settings = pkginfos.new_clang_settings([
                     pkginfos.new_build_setting(
                         kind = build_setting_kinds.define,
-                        values = ["_GNU_SOURCE"],
+                        values = ["_GNU_SOURCE", "GREETING=hello world"],
                     ),
                     pkginfos.new_build_setting(
                         kind = build_setting_kinds.define,
                         values = ["_WASI_EMULATED_MMAN"],
                         condition = pkginfos.new_build_setting_condition(
                             platforms = [spm_platforms.wasi],
+                        ),
+                    ),
+                    pkginfos.new_build_setting(
+                        kind = build_setting_kinds.define,
+                        values = ["DEBUG_LOGGING"],
+                        condition = pkginfos.new_build_setting_condition(
+                            configuration = spm_configurations.debug,
                         ),
                     ),
                 ]),
@@ -1490,7 +1497,15 @@ swift_binary(
         "-DSWIFT_PACKAGE",
         "-Xcc",
         "-D_GNU_SOURCE",
+        "-Xcc",
+        "-DGREETING=hello world",
     ] + select({
+        "@rules_swift_package_manager//config_settings/spm/configuration:debug": [
+            "-Xcc",
+            "-DDEBUG_LOGGING",
+        ],
+        "//conditions:default": [],
+    }) + select({
         "@rules_swift_package_manager//config_settings/spm/platform:ios": ["-DFOOBAR"],
         "//conditions:default": [],
     }) + select({

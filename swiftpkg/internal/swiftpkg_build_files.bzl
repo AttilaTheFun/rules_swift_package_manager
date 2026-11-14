@@ -223,7 +223,7 @@ def _swift_target_build_file(repository_ctx, pkg_ctx, target):
                 pkginfos.new_build_setting(
                     kind = bs.kind,
                     values = lists.flatten([
-                        ["-Xcc", "-D" + scg.normalize_define_value(v)]
+                        ["-Xcc", "-D" + v]
                         for v in bs.values
                     ]),
                     condition = bs.condition,

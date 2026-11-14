@@ -22,6 +22,7 @@ def _settings(platform_type, ios = "18.0", visionos = "2.0"):
 
 def _attrs():
     return struct(
+        apple_platform = True,
         ios_minimum_os = "13.0",
         macos_minimum_os = "10.15",
         tvos_minimum_os = "13.0",
